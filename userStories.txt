@@ -16,3 +16,6 @@ User Stories
 stretch goals
   - track callories in each meal
   - notify customer of upcoming meal plan
+
+  https://www.themealdb.com/
+  https://www.edamam.com/
