@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD:RecipeFinder/RecipeFinder.Test/obj/RecipeFinder.Test.csproj.nuget.dgspec.json
     "C:\\Program Files\\Scripts\\Revature\\Team1\\RecipeFinder\\RecipeFinder.Test\\RecipeFinder.Test.csproj": {}
   },
   "projects": {
@@ -12,13 +13,30 @@
         "projectPath": "C:\\Program Files\\Scripts\\Revature\\Team1\\RecipeFinder\\RecipeFinder.Test\\RecipeFinder.Test.csproj",
         "packagesPath": "C:\\Users\\Agama\\.nuget\\packages\\",
         "outputPath": "C:\\Program Files\\Scripts\\Revature\\Team1\\RecipeFinder\\RecipeFinder.Test\\obj\\",
+=======
+    "C:\\Users\\PRO\\Documents\\Revature\\P1\\RecipeFinder\\RecipeFinder\\RecipeFinder.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\PRO\\Documents\\Revature\\P1\\RecipeFinder\\RecipeFinder\\RecipeFinder.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PRO\\Documents\\Revature\\P1\\RecipeFinder\\RecipeFinder\\RecipeFinder.csproj",
+        "projectName": "RecipeFinder",
+        "projectPath": "C:\\Users\\PRO\\Documents\\Revature\\P1\\RecipeFinder\\RecipeFinder\\RecipeFinder.csproj",
+        "packagesPath": "C:\\Users\\PRO\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PRO\\Documents\\Revature\\P1\\RecipeFinder\\RecipeFinder\\obj\\",
+>>>>>>> main:RecipeFinder.App/obj/RecipeFinder.csproj.nuget.dgspec.json
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+<<<<<<< HEAD:RecipeFinder/RecipeFinder.Test/obj/RecipeFinder.Test.csproj.nuget.dgspec.json
           "C:\\Users\\Agama\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+          "C:\\Users\\PRO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> main:RecipeFinder.App/obj/RecipeFinder.csproj.nuget.dgspec.json
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -48,28 +66,6 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "dependencies": {
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[17.7.1, )"
-            },
-            "coverlet.collector": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[3.2.0, )"
-            },
-            "xunit": {
-              "target": "Package",
-              "version": "[2.4.2, )"
-            },
-            "xunit.runner.visualstudio": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.4.5, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -87,6 +83,13 @@
               "version": "[7.0.16, 7.0.16]"
             },
             {
+<<<<<<< HEAD:RecipeFinder/RecipeFinder.Test/obj/RecipeFinder.Test.csproj.nuget.dgspec.json
+=======
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[7.0.16, 7.0.16]"
+            },
+            {
+>>>>>>> main:RecipeFinder.App/obj/RecipeFinder.csproj.nuget.dgspec.json
               "name": "Microsoft.NETCore.App.Ref",
               "version": "[7.0.16, 7.0.16]"
             },
