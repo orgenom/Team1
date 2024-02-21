@@ -1,0 +1,21 @@
+pull data from API
+ - code first approach
+
+User Stories
+1 register a new user
+2 existing user logs back in
+  - user class
+3 search for recipie
+4 adding filters to the search
+  - recipie class
+5 add/save recipie to favorites
+  - list of recipies
+6 create new recepie
+7 create meal plan/schedule meal
+
+stretch goals
+  - track callories in each meal
+  - notify customer of upcoming meal plan
+
+  https://www.themealdb.com/
+  https://www.edamam.com/
