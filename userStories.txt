@@ -1,0 +1,11 @@
+pull data from API
+ - code first approach
+
+User Stories
+- register a new user
+	- user class
+- search for recipie
+	- recipie class
+- add/save recipie to favorites
+	- list of recipies
+- create new recepie
