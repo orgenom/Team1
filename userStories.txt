@@ -2,8 +2,8 @@ pull data from API
  - code first approach
 
 User Stories
-1 register a new user
-2 existing user logs back in
+1 register a new user   // Nima
+2 existing user logs back in //Nima
   - user class
 3 search for recipie
 4 adding filters to the search
