@@ -145,10 +145,11 @@ namespace RecipeAPI.Repository
 
         public async Task Add(Meal meal)
         {
-            string query = @"INSERT INTO [RecipeFinder].[Meal] (Name, Category, Area, Instructions, Meal_thumb, Tags, Youtube,Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8, Ingredient9, Ingredient10, Ingredient11, Ingredient12, Ingredient13, Ingredient14, Ingredient15, Measure1, Measure2, Measure3, Measure4, Measure5, Measure6, Measure7, Measure8, Measure9, Measure10, Measure11, Measure12,Measure13, Measure14, Measure15) 
-              VALUES (@Name, @Category, @Area, @Instructions, @Meal_thumb, @Tags, @Youtube, @Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5, @Ingredient6, @Ingredient7, @Ingredient8, @Ingredient9, @Ingredient10, @Ingredient11, @Ingredient12, @Ingredient13, @Ingredient14, @Ingredient15, @Measure1, @Measure2, @Measure3, @Measure4, @Measure5, @Measure6, @Measure7, @Measure8, @Measure9, @Measure10, @Measure11, @Measure12, @Measure13, @Measure14, @Measure15)";
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
 
-            SqlConnection connection = new(this._connectionString);
+            string query = @"INSERT INTO [RecipieFinder].[Meal] (Name, Category, Area, Instructions, Meal_thumb, Tags, Youtube,Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8, Ingredient9, Ingredient10, Ingredient11, Ingredient12, Ingredient13, Ingredient14, Ingredient15, Measure1, Measure2, Measure3, Measure4, Measure5, Measure6, Measure7, Measure8, Measure9, Measure10, Measure11, Measure12,Measure13, Measure14, Measure15) 
+              VALUES (@Name, @Category, @Area, @Instructions, @Meal_thumb, @Tags, @Youtube, @Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5, @Ingredient6, @Ingredient7, @Ingredient8, @Ingredient9, @Ingredient10, @Ingredient11, @Ingredient12, @Ingredient13, @Ingredient14, @Ingredient15, @Measure1, @Measure2, @Measure3, @Measure4, @Measure5, @Measure6, @Measure7, @Measure8, @Measure9, @Measure10, @Measure11, @Measure12, @Measure13, @Measure14, @Measure15)";
 
             SqlCommand command = new(query, connection);
 
@@ -190,8 +191,11 @@ namespace RecipeAPI.Repository
             command.Parameters.AddWithValue("@Measure14", meal.Measure14 ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Measure15", meal.Measure15 ?? (object)DBNull.Value);
 
-            await connection.OpenAsync();
+            
             await command.ExecuteNonQueryAsync();
+            await connection.CloseAsync();
+
+            _logger.LogInformation("Executed EnterNewMealAsync");
         }
 
         public async Task DeleteByID(int id)

@@ -4,7 +4,7 @@
 ## Get latest from `dotnet new gitignore`
 
 # Hide Connection Strings
-appsettings.json
+*appsettings*.json
 
 # dotenv files
 .env
