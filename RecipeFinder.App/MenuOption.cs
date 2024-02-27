@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http.Json;
 
 namespace RecipeFinder
 {
@@ -69,6 +70,7 @@ namespace RecipeFinder
             }
         }
 
+        /*
         public static void AddRecipe()
         {
             string path = @".\TextFile.txt";
@@ -97,6 +99,46 @@ namespace RecipeFinder
             meal.strIngredient3 = ingr3;
 
             WriteFile(meal, path);
+        }
+        */
+        static string url = "https://localhost:7297/"; //add api uri
+        public static async void AddRecipe(){
+            string uri = url + "api/Meal/";
+
+            string id = "0";
+            Console.Write("Recipe Name: ");
+            string? recipeName = Console.ReadLine();
+            Console.Write("Recipe Category: ");
+            string? category = Console.ReadLine();
+            Console.Write("Recipe Area: ");
+            string? area = Console.ReadLine();
+            Console.Write("Ingredient 1: ");
+            string? ingr1 = Console.ReadLine();
+            Console.Write("Ingredient 2: ");
+            string? ingr2 = Console.ReadLine();
+            Console.Write("Ingredient 3: ");
+            string? ingr3 = Console.ReadLine();
+
+            Meal meal = new Meal();
+            meal.idMeal = id;
+            meal.strMeal = recipeName;
+            meal.strCategory = category;
+            meal.strArea = area;
+            meal.strIngredient1 = ingr1;
+            meal.strIngredient2 = ingr2;
+            meal.strIngredient3 = ingr3;
+
+            HttpClient client = new HttpClient();
+            try{
+                HttpResponseMessage response = await client.PostAsJsonAsync<Meal>(uri, meal);
+                if(!response.IsSuccessStatusCode){
+                    Console.WriteLine(response.StatusCode + "\n" + response.Content);
+                }
+            }catch (Exception e){
+                Console.WriteLine(e.Message);
+            }
+            
+            
         }
 
         public static void Serialize(Meal meal, string path)

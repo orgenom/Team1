@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ;
 //await File.ReadAllTextAsync("../.connectionString") ?? throw new ArgumentNullException(nameof(connectionString));
-
+string connectionString = builder.Configuration.GetConnectionString("MyDatabase") ?? throw new ArgumentNullException(nameof(connectionString));
 // Add services to the container.
 
 builder.Services.AddControllers();
