@@ -1,14 +1,15 @@
 using Microsoft.Extensions.Configuration;
 using RecipeFinder.DTO;
 using RecipeFinder.Logic.Model;
+using Microsoft.Extensions.Configuration.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
-;
 //await File.ReadAllTextAsync("../.connectionString") ?? throw new ArgumentNullException(nameof(connectionString));
+
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+
 
 // Add services to the container.
 
@@ -17,23 +18,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var config = new ConfigurationBuilder.
-    SetBasePath(builder.Environment.ContentRootPath).
-    AddJsonFile("appsettings.json").
-    Build();
 
-builder.Services.AddSingleton<MealAccess>(config);
-builder.Services.AddSingleton<MealPlanAccess>(config);
-builder.Services.AddSingleton<UserAccess>(config);
+builder.Services.AddSingleton(new RecipeRepository(configuration));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
