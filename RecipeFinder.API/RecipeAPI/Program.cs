@@ -4,18 +4,12 @@ using RecipeFinder.Logic.Model;
 using Microsoft.Extensions.Configuration.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-//await File.ReadAllTextAsync("../.connectionString") ?? throw new ArgumentNullException(nameof(connectionString));
-<<<<<<< HEAD
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-
-=======
-string connectionString = builder.Configuration.GetConnectionString("MyDatabase") ?? throw new ArgumentNullException(nameof(connectionString));
->>>>>>> e916dc2853020aa09a40c98ef6eb247e562c6c48
-// Add services to the container.
+string connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(connectionString));
 
 builder.Services.AddControllers();
 
