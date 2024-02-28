@@ -157,7 +157,7 @@ namespace Recipe.API.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpGet("login")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             try
