@@ -33,7 +33,7 @@ namespace RecipeFinder.DTO
             cmd.Parameters.AddWithValue("@Password", password);
             using SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
-            await conn.CloseAsync();
+            
 
             var user = new User();
 
@@ -49,37 +49,30 @@ namespace RecipeFinder.DTO
                     user.Email = reader.GetString(5);
                 }
             }
-
+            await conn.CloseAsync();
             return user;
         }
 
-        public async Task Register(User user)
+        public async Task<bool> Register(User user)
         {
-            try
-            {
-                using SqlConnection conn = new(_connectionString);
-                await conn.OpenAsync();
+            using SqlConnection conn = new(_connectionString);
+            await conn.OpenAsync();
 
-                string query = "INSERT INTO [RecipeFinder].[User] (Username, Password, First_name, Last_name, Email) VALUES (@Username, @Password, @First_name, @Last_name, @Email)";
-                using SqlCommand cmd = new(query, conn);
-                cmd.Parameters.AddWithValue("@Username", user.Username);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
-                cmd.Parameters.AddWithValue("@First_name", user.FirstName);
-                cmd.Parameters.AddWithValue("@Last_name", user.LastName);
-                cmd.Parameters.AddWithValue("@Email", user.Email);
-                await cmd.ExecuteNonQueryAsync();
+            string query = "INSERT INTO [RecipeFinder].[User] (Username, Password, First_name, Last_name, Email) VALUES (@Username, @Password, @First_name, @Last_name, @Email)";
+            using SqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@Username", user.Username);
+            cmd.Parameters.AddWithValue("@Password", user.Password);
+            cmd.Parameters.AddWithValue("@First_name", user.FirstName);
+            cmd.Parameters.AddWithValue("@Last_name", user.LastName);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            await cmd.ExecuteNonQueryAsync();
 
-                await conn.CloseAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Environment.Exit(1);
-            }
+            await conn.CloseAsync();
+            return true;
 
         }
 
-        public async Task UpdateUser(int id, string username, string password, string firstName, string lastName, string email)
+        public async Task<bool> UpdateUser(int id, string username, string password, string firstName, string lastName, string email)
         {
             using SqlConnection conn = new(_connectionString);
             await conn.OpenAsync();
@@ -95,27 +88,21 @@ namespace RecipeFinder.DTO
             await cmd.ExecuteNonQueryAsync();
 
             await conn.CloseAsync();
+            return true;
         }
 
-        public async Task DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            try
-            {
-                using SqlConnection conn = new(_connectionString);
-                await conn.OpenAsync();
+        using SqlConnection conn = new(_connectionString);
+        await conn.OpenAsync();
 
-                string query = "DELETE FROM [RecipeFinder].[User] WHERE Id = @Id";
-                using SqlCommand cmd = new(query, conn);
-                cmd.Parameters.AddWithValue("@Id", id);
-                await cmd.ExecuteNonQueryAsync();
+        string query = "DELETE FROM [RecipeFinder].[User] WHERE Id = @Id";
+        using SqlCommand cmd = new(query, conn);
+        cmd.Parameters.AddWithValue("@Id", id);
+        await cmd.ExecuteNonQueryAsync();
 
-                await conn.CloseAsync();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Environment.Exit(1);
-            }
+        await conn.CloseAsync();
+        return true;
         }
 
         public async Task<User> GetUser(int id)

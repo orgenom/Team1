@@ -33,7 +33,7 @@ namespace RecipeFinder.DTO
             using SqlCommand cmd = new(query, conn);
             using SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
-            await conn.CloseAsync();
+           
 
             var meals = new List<Meal>();
 
@@ -83,27 +83,27 @@ namespace RecipeFinder.DTO
                     meals.Add(meal);
                 }
             }
-
+            await conn.CloseAsync();
             return meals;
         }
 
-        public Meal GetMeal(int id)
+        public async Task<Meal> GetMeal(int id)
         {
             using SqlConnection conn = new(_connectionString);
-            conn.Open();
+            await conn.OpenAsync();
 
             string query = "SELECT * FROM [RecipeFinder].[Meal] WHERE Id = @Id";
             using SqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@Id", id);
             using SqlDataReader reader = cmd.ExecuteReader();
 
-            conn.Close();
+            
 
             var meal = new Meal();
 
             if (reader.HasRows)
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     meal.Id = reader.GetInt32(0);
@@ -147,133 +147,156 @@ namespace RecipeFinder.DTO
 
                 }
             }
-
+            await conn.CloseAsync();
             return meal;
         }
 
-        public void AddMeal(Meal meal)
+        public async Task<bool> AddMeal(Meal meal)
         {
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
-
-            
-            string query = "INSERT INTO [RecipeFinder].[Meal] (Name, Category, Area, Instructions, MealThumb, Tags, Youtube, Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8, Ingredient9, Ingredient10, Ingredient11, Ingredient12, Ingredient13, Ingredient14, Ingredient15, Measure1, Measure2, Measure3, Measure4, Measure5, Measure6, Measure7, Measure8, Measure9, Measure10, Measure11, Measure12, Measure13, Measure14, Measure15) VALUES (@Name, @Category, @Area, @Instructions, @MealThumb, @Tags, @Youtube, @Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5, @Ingredient6, @Ingredient7, @Ingredient8, @Ingredient9, @Ingredient10, @Ingredient11, @Ingredient12, @Ingredient13, @Ingredient14, @Ingredient15, @Measure1, @Measure2, @Measure3, @Measure4, @Measure5, @Measure6, @Measure7, @Measure8, @Measure9, @Measure10, @Measure11, @Measure12, @Measure13, @Measure14, @Measure15)";
-
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@Name", meal.Name);
-            cmd.Parameters.AddWithValue("@Category", meal.Category);
-            cmd.Parameters.AddWithValue("@Area", meal.Area);
-            cmd.Parameters.AddWithValue("@Instructions", meal.Instructions);
-            cmd.Parameters.AddWithValue("@MealThumb", meal.MealThumb);
-            cmd.Parameters.AddWithValue("@Tags", meal.Tags);
-            cmd.Parameters.AddWithValue("@Youtube", meal.Youtube);
-            cmd.Parameters.AddWithValue("@Ingredient1", meal.Ingredient1);
-            cmd.Parameters.AddWithValue("@Ingredient2", meal.Ingredient2);
-            cmd.Parameters.AddWithValue("@Ingredient3", meal.Ingredient3);
-            cmd.Parameters.AddWithValue("@Ingredient4", meal.Ingredient4);
-            cmd.Parameters.AddWithValue("@Ingredient5", meal.Ingredient5);
-            cmd.Parameters.AddWithValue("@Ingredient6", meal.Ingredient6);
-            cmd.Parameters.AddWithValue("@Ingredient7", meal.Ingredient7);
-            cmd.Parameters.AddWithValue("@Ingredient8", meal.Ingredient8);
-            cmd.Parameters.AddWithValue("@Ingredient9", meal.Ingredient9);
-            cmd.Parameters.AddWithValue("@Ingredient10", meal.Ingredient10);
-            cmd.Parameters.AddWithValue("@Ingredient11", meal.Ingredient11);
-            cmd.Parameters.AddWithValue("@Ingredient12", meal.Ingredient12);
-            cmd.Parameters.AddWithValue("@Ingredient13", meal.Ingredient13);
-            cmd.Parameters.AddWithValue("@Ingredient14", meal.Ingredient14);
-            cmd.Parameters.AddWithValue("@Ingredient15", meal.Ingredient15);
-            cmd.Parameters.AddWithValue("@Measure1", meal.Measure1);
-            cmd.Parameters.AddWithValue("@Measure2", meal.Measure2);
-            cmd.Parameters.AddWithValue("@Measure3", meal.Measure3);
-            cmd.Parameters.AddWithValue("@Measure4", meal.Measure4);
-            cmd.Parameters.AddWithValue("@Measure5", meal.Measure5);
-            cmd.Parameters.AddWithValue("@Measure6", meal.Measure6);
-            cmd.Parameters.AddWithValue("@Measure7", meal.Measure7);
-            cmd.Parameters.AddWithValue("@Measure8", meal.Measure8);
-            cmd.Parameters.AddWithValue("@Measure9", meal.Measure9);
-            cmd.Parameters.AddWithValue("@Measure10", meal.Measure10);
-            cmd.Parameters.AddWithValue("@Measure11", meal.Measure11);
-            cmd.Parameters.AddWithValue("@Measure12", meal.Measure12);
-            cmd.Parameters.AddWithValue("@Measure13", meal.Measure13);
-            cmd.Parameters.AddWithValue("@Measure14", meal.Measure14);
-            cmd.Parameters.AddWithValue("@Measure15", meal.Measure15);
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
 
 
-            cmd.ExecuteNonQuery();
+                string query = "INSERT INTO [RecipeFinder].[Meal] (Name, Category, Area, Instructions, MealThumb, Tags, Youtube, Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8, Ingredient9, Ingredient10, Ingredient11, Ingredient12, Ingredient13, Ingredient14, Ingredient15, Measure1, Measure2, Measure3, Measure4, Measure5, Measure6, Measure7, Measure8, Measure9, Measure10, Measure11, Measure12, Measure13, Measure14, Measure15) VALUES (@Name, @Category, @Area, @Instructions, @MealThumb, @Tags, @Youtube, @Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5, @Ingredient6, @Ingredient7, @Ingredient8, @Ingredient9, @Ingredient10, @Ingredient11, @Ingredient12, @Ingredient13, @Ingredient14, @Ingredient15, @Measure1, @Measure2, @Measure3, @Measure4, @Measure5, @Measure6, @Measure7, @Measure8, @Measure9, @Measure10, @Measure11, @Measure12, @Measure13, @Measure14, @Measure15)";
 
-            conn.Close();
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@Name", meal.Name);
+                cmd.Parameters.AddWithValue("@Category", meal.Category);
+                cmd.Parameters.AddWithValue("@Area", meal.Area);
+                cmd.Parameters.AddWithValue("@Instructions", meal.Instructions);
+                cmd.Parameters.AddWithValue("@MealThumb", meal.MealThumb);
+                cmd.Parameters.AddWithValue("@Tags", meal.Tags);
+                cmd.Parameters.AddWithValue("@Youtube", meal.Youtube);
+                cmd.Parameters.AddWithValue("@Ingredient1", meal.Ingredient1);
+                cmd.Parameters.AddWithValue("@Ingredient2", meal.Ingredient2);
+                cmd.Parameters.AddWithValue("@Ingredient3", meal.Ingredient3);
+                cmd.Parameters.AddWithValue("@Ingredient4", meal.Ingredient4);
+                cmd.Parameters.AddWithValue("@Ingredient5", meal.Ingredient5);
+                cmd.Parameters.AddWithValue("@Ingredient6", meal.Ingredient6);
+                cmd.Parameters.AddWithValue("@Ingredient7", meal.Ingredient7);
+                cmd.Parameters.AddWithValue("@Ingredient8", meal.Ingredient8);
+                cmd.Parameters.AddWithValue("@Ingredient9", meal.Ingredient9);
+                cmd.Parameters.AddWithValue("@Ingredient10", meal.Ingredient10);
+                cmd.Parameters.AddWithValue("@Ingredient11", meal.Ingredient11);
+                cmd.Parameters.AddWithValue("@Ingredient12", meal.Ingredient12);
+                cmd.Parameters.AddWithValue("@Ingredient13", meal.Ingredient13);
+                cmd.Parameters.AddWithValue("@Ingredient14", meal.Ingredient14);
+                cmd.Parameters.AddWithValue("@Ingredient15", meal.Ingredient15);
+                cmd.Parameters.AddWithValue("@Measure1", meal.Measure1);
+                cmd.Parameters.AddWithValue("@Measure2", meal.Measure2);
+                cmd.Parameters.AddWithValue("@Measure3", meal.Measure3);
+                cmd.Parameters.AddWithValue("@Measure4", meal.Measure4);
+                cmd.Parameters.AddWithValue("@Measure5", meal.Measure5);
+                cmd.Parameters.AddWithValue("@Measure6", meal.Measure6);
+                cmd.Parameters.AddWithValue("@Measure7", meal.Measure7);
+                cmd.Parameters.AddWithValue("@Measure8", meal.Measure8);
+                cmd.Parameters.AddWithValue("@Measure9", meal.Measure9);
+                cmd.Parameters.AddWithValue("@Measure10", meal.Measure10);
+                cmd.Parameters.AddWithValue("@Measure11", meal.Measure11);
+                cmd.Parameters.AddWithValue("@Measure12", meal.Measure12);
+                cmd.Parameters.AddWithValue("@Measure13", meal.Measure13);
+                cmd.Parameters.AddWithValue("@Measure14", meal.Measure14);
+                cmd.Parameters.AddWithValue("@Measure15", meal.Measure15);
+
+
+                await cmd.ExecuteNonQueryAsync();
+
+                await conn.CloseAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
-        public void UpdateMeal(Meal meal)
+        public async Task<bool> UpdateMeal(Meal meal)
         {
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
 
-            using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
 
-            conn.Open();
+                string query = "UPDATE [RecipeFinder].[Meal] SET Name = @Name, Category = @Category, Area = @Area, Instructions = @Instructions, MealThumb = @MealThumb, Tags = @Tags, Youtube = @Youtube, Ingredient1 = @Ingredient1, Ingredient2 = @Ingredient2, Ingredient3 = @Ingredient3, Ingredient4 = @Ingredient4, Ingredient5 = @Ingredient5, Ingredient6 = @Ingredient6, Ingredient7 = @Ingredient7, Ingredient8 = @Ingredient8, Ingredient9 = @Ingredient9, Ingredient10 = @Ingredient10, Ingredient11 = @Ingredient11, Ingredient12 = @Ingredient12, Ingredient13 = @Ingredient13, Ingredient14 = @Ingredient14, Ingredient15 = @Ingredient15, Measure1 = @Measure1, Measure2 = @Measure2, Measure3 = @Measure3, Measure4 = @Measure4, Measure5 = @Measure5, Measure6 = @Measure6, Measure7 = @Measure7, Measure8 = @Measure8, Measure9 = @Measure9, Measure10 = @Measure10, Measure11 = @Measure11, Measure12 = @Measure12, Measure13 = @Measure13, Measure14 = @Measure14, Measure15 = @Measure15 WHERE Id = @Id";
 
-            string query = "UPDATE [RecipeFinder].[Meal] SET Name = @Name, Category = @Category, Area = @Area, Instructions = @Instructions, MealThumb = @MealThumb, Tags = @Tags, Youtube = @Youtube, Ingredient1 = @Ingredient1, Ingredient2 = @Ingredient2, Ingredient3 = @Ingredient3, Ingredient4 = @Ingredient4, Ingredient5 = @Ingredient5, Ingredient6 = @Ingredient6, Ingredient7 = @Ingredient7, Ingredient8 = @Ingredient8, Ingredient9 = @Ingredient9, Ingredient10 = @Ingredient10, Ingredient11 = @Ingredient11, Ingredient12 = @Ingredient12, Ingredient13 = @Ingredient13, Ingredient14 = @Ingredient14, Ingredient15 = @Ingredient15, Measure1 = @Measure1, Measure2 = @Measure2, Measure3 = @Measure3, Measure4 = @Measure4, Measure5 = @Measure5, Measure6 = @Measure6, Measure7 = @Measure7, Measure8 = @Measure8, Measure9 = @Measure9, Measure10 = @Measure10, Measure11 = @Measure11, Measure12 = @Measure12, Measure13 = @Measure13, Measure14 = @Measure14, Measure15 = @Measure15 WHERE Id = @Id";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@Id", meal.Id);
+                cmd.Parameters.AddWithValue("@Name", meal.Name);
+                cmd.Parameters.AddWithValue("@Category", meal.Category);
+                cmd.Parameters.AddWithValue("@Area", meal.Area);
+                cmd.Parameters.AddWithValue("@Instructions", meal.Instructions);
+                cmd.Parameters.AddWithValue("@MealThumb", meal.MealThumb);
+                cmd.Parameters.AddWithValue("@Tags", meal.Tags);
+                cmd.Parameters.AddWithValue("@Youtube", meal.Youtube);
+                cmd.Parameters.AddWithValue("@Ingredient1", meal.Ingredient1);
+                cmd.Parameters.AddWithValue("@Ingredient2", meal.Ingredient2);
+                cmd.Parameters.AddWithValue("@Ingredient3", meal.Ingredient3);
+                cmd.Parameters.AddWithValue("@Ingredient4", meal.Ingredient4);
+                cmd.Parameters.AddWithValue("@Ingredient5", meal.Ingredient5);
+                cmd.Parameters.AddWithValue("@Ingredient6", meal.Ingredient6);
+                cmd.Parameters.AddWithValue("@Ingredient7", meal.Ingredient7);
+                cmd.Parameters.AddWithValue("@Ingredient8", meal.Ingredient8);
+                cmd.Parameters.AddWithValue("@Ingredient9", meal.Ingredient9);
+                cmd.Parameters.AddWithValue("@Ingredient10", meal.Ingredient10);
+                cmd.Parameters.AddWithValue("@Ingredient11", meal.Ingredient11);
+                cmd.Parameters.AddWithValue("@Ingredient12", meal.Ingredient12);
+                cmd.Parameters.AddWithValue("@Ingredient13", meal.Ingredient13);
+                cmd.Parameters.AddWithValue("@Ingredient14", meal.Ingredient14);
+                cmd.Parameters.AddWithValue("@Ingredient15", meal.Ingredient15);
+                cmd.Parameters.AddWithValue("@Measure1", meal.Measure1);
+                cmd.Parameters.AddWithValue("@Measure2", meal.Measure2);
+                cmd.Parameters.AddWithValue("@Measure3", meal.Measure3);
+                cmd.Parameters.AddWithValue("@Measure4", meal.Measure4);
+                cmd.Parameters.AddWithValue("@Measure5", meal.Measure5);
+                cmd.Parameters.AddWithValue("@Measure6", meal.Measure6);
+                cmd.Parameters.AddWithValue("@Measure7", meal.Measure7);
+                cmd.Parameters.AddWithValue("@Measure8", meal.Measure8);
+                cmd.Parameters.AddWithValue("@Measure9", meal.Measure9);
+                cmd.Parameters.AddWithValue("@Measure10", meal.Measure10);
+                cmd.Parameters.AddWithValue("@Measure11", meal.Measure11);
+                cmd.Parameters.AddWithValue("@Measure12", meal.Measure12);
+                cmd.Parameters.AddWithValue("@Measure13", meal.Measure13);
+                cmd.Parameters.AddWithValue("@Measure14", meal.Measure14);
+                cmd.Parameters.AddWithValue("@Measure15", meal.Measure15);
 
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@Id", meal.Id);
-            cmd.Parameters.AddWithValue("@Name", meal.Name);
-            cmd.Parameters.AddWithValue("@Category", meal.Category);
-            cmd.Parameters.AddWithValue("@Area", meal.Area);
-            cmd.Parameters.AddWithValue("@Instructions", meal.Instructions);
-            cmd.Parameters.AddWithValue("@MealThumb", meal.MealThumb);
-            cmd.Parameters.AddWithValue("@Tags", meal.Tags);
-            cmd.Parameters.AddWithValue("@Youtube", meal.Youtube);
-            cmd.Parameters.AddWithValue("@Ingredient1", meal.Ingredient1);
-            cmd.Parameters.AddWithValue("@Ingredient2", meal.Ingredient2);
-            cmd.Parameters.AddWithValue("@Ingredient3", meal.Ingredient3);
-            cmd.Parameters.AddWithValue("@Ingredient4", meal.Ingredient4);
-            cmd.Parameters.AddWithValue("@Ingredient5", meal.Ingredient5);
-            cmd.Parameters.AddWithValue("@Ingredient6", meal.Ingredient6);
-            cmd.Parameters.AddWithValue("@Ingredient7", meal.Ingredient7);
-            cmd.Parameters.AddWithValue("@Ingredient8", meal.Ingredient8);
-            cmd.Parameters.AddWithValue("@Ingredient9", meal.Ingredient9);
-            cmd.Parameters.AddWithValue("@Ingredient10", meal.Ingredient10);
-            cmd.Parameters.AddWithValue("@Ingredient11", meal.Ingredient11);
-            cmd.Parameters.AddWithValue("@Ingredient12", meal.Ingredient12);
-            cmd.Parameters.AddWithValue("@Ingredient13", meal.Ingredient13);
-            cmd.Parameters.AddWithValue("@Ingredient14", meal.Ingredient14);
-            cmd.Parameters.AddWithValue("@Ingredient15", meal.Ingredient15);
-            cmd.Parameters.AddWithValue("@Measure1", meal.Measure1);
-            cmd.Parameters.AddWithValue("@Measure2", meal.Measure2);
-            cmd.Parameters.AddWithValue("@Measure3", meal.Measure3);
-            cmd.Parameters.AddWithValue("@Measure4", meal.Measure4);
-            cmd.Parameters.AddWithValue("@Measure5", meal.Measure5);
-            cmd.Parameters.AddWithValue("@Measure6", meal.Measure6);
-            cmd.Parameters.AddWithValue("@Measure7", meal.Measure7);
-            cmd.Parameters.AddWithValue("@Measure8", meal.Measure8);
-            cmd.Parameters.AddWithValue("@Measure9", meal.Measure9);
-            cmd.Parameters.AddWithValue("@Measure10", meal.Measure10);
-            cmd.Parameters.AddWithValue("@Measure11", meal.Measure11);
-            cmd.Parameters.AddWithValue("@Measure12", meal.Measure12);
-            cmd.Parameters.AddWithValue("@Measure13", meal.Measure13);
-            cmd.Parameters.AddWithValue("@Measure14", meal.Measure14);
-            cmd.Parameters.AddWithValue("@Measure15", meal.Measure15);
+                await cmd.ExecuteNonQueryAsync();
 
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-
-
+                await conn.CloseAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
 
         }
 
-        public bool DeleteMeal(int id)
+        public async Task<bool> DeleteMeal(int id)
         {
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
 
-            string query = "DELETE FROM [RecipeFinder].[Meal] WHERE Id = @Id";
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@Id", id);
-            cmd.ExecuteNonQuery();
+                string query = "DELETE FROM [RecipeFinder].[Meal] WHERE Id = @Id";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@Id", id);
+                await cmd.ExecuteNonQueryAsync();
 
-            conn.Close();
+                await conn.CloseAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

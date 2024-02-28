@@ -10,6 +10,11 @@ namespace RecipeFinder.Logic
         {
             Console.WriteLine("Recipe Finder starting...");
 
+            var emailSender = new EmailObject("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");
+
+
+            emailSender.GetAllContacts();
+
         }
     }
 }

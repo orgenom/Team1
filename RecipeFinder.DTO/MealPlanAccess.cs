@@ -25,77 +25,147 @@ namespace RecipeFinder.DTO
             }
         }
 
-        public List<MealPlan>GetMealPlans(int userID)
+        public async Task<List<MealPlan>>GetMealPlansByUserID(int userID)
+        {
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
+
+                string query = "SELECT * FROM [RecipeFinder].[MealPlan] WHERE UserID = @UserID";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                using SqlDataReader reader = cmd.ExecuteReader();
+
+                List<MealPlan> mealplans = new();
+
+                
+                while (await reader.ReadAsync())
+                {
+
+                    MealPlan curr = new();
+                    curr.UserID = reader.GetInt32(0);
+                    curr.MealID = reader.GetInt32(1);
+                    curr.Date = reader.GetDateTime(2);
+                    mealplans.Add(curr);
+
+
+                }
+
+                await conn.CloseAsync();
+                return mealplans;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new List<MealPlan>();
+            }
+        }
+
+        public async Task<bool> AddMealPlan(MealPlan mealplan)
+        {
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
+
+                string query = "INSERT INTO [RecipeFinder].[MealPlan] (UserID, MealID, Date) VALUES (@UserID, @MealID, @Date)";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@UserID", mealplan.UserID);
+                cmd.Parameters.AddWithValue("@MealID", mealplan.MealID);
+                cmd.Parameters.AddWithValue("@Date", mealplan.Date);
+                await cmd.ExecuteNonQueryAsync();
+
+                await conn.CloseAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteMealPlan(int userID, int mealID, DateTime date)
+        {
+            try { 
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
+
+                string query = "DELETE FROM [RecipeFinder].[MealPlan] WHERE UserID = @UserID AND MealID = @MealID AND Date = @Date";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                cmd.Parameters.AddWithValue("@MealID", mealID);
+                cmd.Parameters.AddWithValue("@Date", date);
+                await cmd.ExecuteNonQueryAsync();
+
+                await conn.CloseAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateMealPlan(MealPlan mealplan)
         {
 
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
-
-            string query = "SELECT * FROM [RecipeFinder].[MealPlan] WHERE UserID = @UserID";
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@UserID", userID);
-            using SqlDataReader reader = cmd.ExecuteReader();
-
-            List<MealPlan> mealplans = new();
-
-            conn.Close();
-            while (reader.Read())
+            try
             {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
 
-                MealPlan curr = new();
-                curr.UserID = reader.GetInt32(0);
-                curr.MealID = reader.GetInt32(1);
-                curr.Date = reader.GetDateTime(2);
-                mealplans.Add(curr);
+                string query = "UPDATE [RecipeFinder].[MealPlan] SET UserID = @UserID, MealID = @MealID, Date = @Date WHERE UserID = @UserID AND MealID = @MealID AND Date = @Date";
+                using SqlCommand cmd = new(query, conn);
+                cmd.Parameters.AddWithValue("@UserID", mealplan.UserID);
+                cmd.Parameters.AddWithValue("@MealID", mealplan.MealID);
+                cmd.Parameters.AddWithValue("@Date", mealplan.Date);
+                await cmd.ExecuteNonQueryAsync();
 
+                await conn.CloseAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<List<MealPlan>> GetMealPlans()
+        {
+
+            try
+            {
+                using SqlConnection conn = new(_connectionString);
+                await conn.OpenAsync();
+
+                string query = "SELECT * FROM [RecipeFinder].[MealPlan]";
+                using SqlCommand cmd = new(query, conn);
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                List<MealPlan> mealplans = new();
+                while (await reader.ReadAsync())
+                {
+
+                    MealPlan mealPlan = new();
+                    mealPlan.UserID = reader.GetInt32(0);
+                    mealPlan.MealID = reader.GetInt32(1);
+                    mealPlan.Date = reader.GetDateTime(2);
+                    mealplans.Add(mealPlan);
+
+                }
+                return mealplans;
 
             }
-            return mealplans;
-        }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new List<MealPlan>();
+            }
 
-        public void AddMealPlan(MealPlan mealplan)
-        {
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
-
-            string query = "INSERT INTO [RecipeFinder].[MealPlan] (UserID, MealID, Date) VALUES (@UserID, @MealID, @Date)";
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@UserID", mealplan.UserID);
-            cmd.Parameters.AddWithValue("@MealID", mealplan.MealID);
-            cmd.Parameters.AddWithValue("@Date", mealplan.Date);
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-        }
-
-        public void DeleteMealPlan(int userID, int mealID, DateTime date)
-        {
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
-
-            string query = "DELETE FROM [RecipeFinder].[MealPlan] WHERE UserID = @UserID AND MealID = @MealID AND Date = @Date";
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@UserID", userID);
-            cmd.Parameters.AddWithValue("@MealID", mealID);
-            cmd.Parameters.AddWithValue("@Date", date);
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-        }
-
-        public void UpdateMealPlan(MealPlan mealplan)
-        {
-            using SqlConnection conn = new(_connectionString);
-            conn.Open();
-
-            string query = "UPDATE [RecipeFinder].[MealPlan] SET UserID = @UserID, MealID = @MealID, Date = @Date WHERE UserID = @UserID AND MealID = @MealID AND Date = @Date";
-            using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@UserID", mealplan.UserID);
-            cmd.Parameters.AddWithValue("@MealID", mealplan.MealID);
-            cmd.Parameters.AddWithValue("@Date", mealplan.Date);
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
         }
 
     }
