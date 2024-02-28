@@ -13,13 +13,15 @@ namespace Recipe.API.Controllers
     {
         private readonly RecipeRepository _repo;
         private readonly ILogger<RecipeRepository> _logger;
-        private readonly EmailObject emailObject;
+        private readonly EmailObject _emailObject;
+        private readonly MealDBObject _mealDBObject;
 
         public RecipeFinderController(RecipeRepository repo, ILogger<RecipeRepository> logger)
         {
             _repo= repo;
             _logger = logger;
-            emailObject = new EmailObject(_repo._configuration["BrevoKey"] ?? "");
+            _emailObject = new EmailObject(_repo._configuration["BrevoKey"] ?? "");
+            _mealDBObject = new MealDBObject();
         }
 
         // GET: api/<UserController>/user/{id}
@@ -45,7 +47,7 @@ namespace Recipe.API.Controllers
         {
             try
             {
-                return await emailObject.GetAllContacts();
+                return await _emailObject.GetAllContacts();
             }
             catch(Exception ex)
             {
@@ -58,7 +60,7 @@ namespace Recipe.API.Controllers
         {
             try
             {
-                emailObject.AddContact(firstname, lastname, email);
+                _emailObject.AddContact(firstname, lastname, email);
                 return "Contact added";
             }
             catch (Exception ex)
@@ -72,7 +74,7 @@ namespace Recipe.API.Controllers
         {
             try
             {
-                emailObject.SendEmail(email, subject, content);
+                _emailObject.SendEmail(email, subject, content);
                 return "Email sent";
             }
             catch (Exception ex)
@@ -218,6 +220,19 @@ namespace Recipe.API.Controllers
                 return await _repo.GetMealPlans();
             }
             catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("mealdbid")]
+        public async Task<ActionResult<int>> GetMealDBID()
+        {
+            try
+            {
+                return await _mealDBObject.GetInt();
+            }
+            catch(Exception ex)
             {
                 return NotFound(ex.Message);
             }

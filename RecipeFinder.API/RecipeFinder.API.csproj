@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RecipeFinder.DTO\RecipeFinder.DTO.csproj" />
-    <ProjectReference Include="..\..\RecipeFinder.Logic\RecipeFinder.Logic.csproj" />
+    <ProjectReference Include="..\RecipeFinder.DTO\RecipeFinder.DTO.csproj" />
+    <ProjectReference Include="..\RecipeFinder.Logic\RecipeFinder.Logic.csproj" />
   </ItemGroup>
 
 </Project>
