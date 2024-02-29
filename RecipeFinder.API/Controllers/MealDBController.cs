@@ -32,7 +32,7 @@ namespace RecipeFinder.API.Controllers
         {
             try
             {
-                return Ok(await _mealDBObject.GetMealByFirstLetter(first_letter));
+                return Ok(await _mealDBObject.GetMealsByFirstLetter(first_letter));
             }
             catch (Exception ex)
             {

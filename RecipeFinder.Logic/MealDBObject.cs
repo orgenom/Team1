@@ -25,14 +25,14 @@ namespace RecipeFinder.Logic
         {
         }
 
-        public async Task<Meal>GetMealByFirstLetter(string name)
+        public async Task<List<Meal>>GetMealsByFirstLetter(string name)
         {
 
             string url = _apiUrl + "search.php?f=" + name;
             var mealResponse = await MealDBReader.Read(url);
             var meals = mealResponse.meals ?? throw new Exception("null meals");
 
-            return meals[0] ?? throw new Exception("null meal");
+            return meals;
 
         }
 

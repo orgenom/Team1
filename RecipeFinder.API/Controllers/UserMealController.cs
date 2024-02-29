@@ -23,7 +23,7 @@ namespace Recipe.API.Controllers
 
 
         [HttpGet("meal/{id}")]
-        public async Task<ActionResult<Meal>> GetMealById(int id)
+        public async Task<ActionResult<UserMeal>> GetMealById(int id)
         {
             var meal = await _repo.GetMealById(id);
             if (meal == null)
@@ -34,20 +34,21 @@ namespace Recipe.API.Controllers
         }
 
         [HttpGet("meals")]
-        public async Task<ActionResult<List<Meal>>> GetMeals()
+        public async Task<ActionResult<List<UserMeal>>> GetMeals()
         {
             try
             {
                 return await _repo.GetMeals();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
+                _logger.LogError(ex, "Error occurred while getting all meals");
                 return NotFound(ex.Message);
             }
         }
 
         [HttpPost("meal")]
-        public async Task<ActionResult<bool>> AddMeal(Meal meal)
+        public async Task<ActionResult<bool>> AddMeal(UserMeal meal)
         {
             try
             {
@@ -55,12 +56,13 @@ namespace Recipe.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error occurred while adding meal");
                 return NotFound(ex.Message);
             }
         }
 
         [HttpPut("meal")]
-        public async Task<ActionResult<bool>> UpdateMeal(Meal meal)
+        public async Task<ActionResult<bool>> UpdateMeal(UserMeal meal)
         {
             try
             {
@@ -68,6 +70,7 @@ namespace Recipe.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error occurred while updating meal");
                 return NotFound(ex.Message);
             }
         }
@@ -81,10 +84,22 @@ namespace Recipe.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error occurred while deleting meal");
                 return NotFound(ex.Message);
             }
         }
 
+        [HttpGet("meal/userid/{id}")]
+        public async Task<ActionResult<List<UserMeal>>> GetMealsByUserID(int id)
+        {
+            var meal = await _repo.GetMealsByUserID(id);
+            if (meal == null)
+            {
+
+                return NotFound();
+            }
+            return meal;
+        }
 
     }
 }

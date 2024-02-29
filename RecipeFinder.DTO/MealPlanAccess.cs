@@ -168,5 +168,7 @@ namespace RecipeFinder.DTO
 
         }
 
+        //get by user id
+
     }
 }

@@ -93,6 +93,19 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login(string username, string password)
+        {
+            try
+            {
+                return Ok(await _repo.Login(username, password));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
 
     }
 }

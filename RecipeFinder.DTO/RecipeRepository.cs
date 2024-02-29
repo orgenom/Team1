@@ -7,7 +7,7 @@ namespace RecipeFinder.DTO
     public class RecipeRepository
     {
 
-        readonly private MealAccess  _meal;
+        readonly private UserMealAccess  _meal;
         readonly private UserAccess _user;
         readonly private MealPlanAccess _mealPlan;
         readonly public IConfiguration? _configuration;
@@ -16,7 +16,7 @@ namespace RecipeFinder.DTO
         public RecipeRepository(string connectionString)
         {
 
-            _meal = new MealAccess(connectionString);
+            _meal = new UserMealAccess(connectionString);
             _user = new UserAccess(connectionString);
             _mealPlan = new MealPlanAccess(connectionString);
 
@@ -26,7 +26,7 @@ namespace RecipeFinder.DTO
 
             string connectionString = configuration.GetConnectionString("DefaultConnection")?? throw new InvalidOperationException("Default Connection missing");
 
-            _meal = new MealAccess(connectionString);
+            _meal = new UserMealAccess(connectionString);
             _user = new UserAccess(connectionString);
             _mealPlan = new MealPlanAccess(connectionString);
             _configuration = configuration;
@@ -58,7 +58,7 @@ namespace RecipeFinder.DTO
 
 
         //meal stuff
-        public async Task<List<Meal>> GetMeals()
+        public async Task<List<UserMeal>> GetMeals()
         {
             return await _meal.GetMeals();
         }
@@ -95,7 +95,7 @@ namespace RecipeFinder.DTO
             return await _user.DeleteUser(id);
         }
 
-        public async Task<Meal> GetMealById(int id)
+        public async Task<UserMeal> GetMealById(int id)
         {
             return await _meal.GetMeal(id);
         }
@@ -105,12 +105,12 @@ namespace RecipeFinder.DTO
             return await _meal.DeleteMeal(id);
         }
 
-        public async Task<bool> UpdateMeal(Meal meal)
+        public async Task<bool> UpdateMeal(UserMeal meal)
         {
             return await _meal.UpdateMeal(meal);
         }
 
-        public async Task<bool> AddMeal(Meal meal)
+        public async Task<bool> AddMeal(UserMeal meal)
         {
             return await _meal.AddMeal(meal);
         }
@@ -118,6 +118,11 @@ namespace RecipeFinder.DTO
         public async Task<List<MealPlan>> GetMealPlans()
         {
             return await _mealPlan.GetMealPlans();
+        }
+
+        public async Task<List<UserMeal>> GetMealsByUserID(int userID)
+        {
+            return await _meal.GetMealsByUserID(userID);
         }
 
 

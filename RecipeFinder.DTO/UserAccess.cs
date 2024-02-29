@@ -22,6 +22,7 @@ namespace RecipeFinder.DTO
             }
         }
 
+        
         public async Task<User> Login(string username, string password)
         {
             using SqlConnection conn = new(_connectionString);

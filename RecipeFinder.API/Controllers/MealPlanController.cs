@@ -28,7 +28,7 @@ namespace RecipeFinder.API.Controllers
         //update mealplan
         //delete meal plan
 
-        [HttpGet("mealplan/{id}")]
+        [HttpGet("mealplan/{user_id}")]
         public async Task<ActionResult<List<MealPlan>>> GetMealPlansByUserID(int id)
         {
             var mealplan = await _repo.GetMealPlansByUserID(id);
