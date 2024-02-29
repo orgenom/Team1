@@ -23,6 +23,7 @@ namespace RecipeFinder.DTO
 
         }
 
+        //user stuff
         public async Task<User> GetUserById(int id)
         {
 
@@ -40,6 +41,13 @@ namespace RecipeFinder.DTO
             return await _user.Register(user);
         }
 
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _user.GetAllUsers();
+        }
+
+
+        //meal stuff
         public async Task<List<Meal>> GetMeals()
         {
             return await _meal.GetMeals();
@@ -55,9 +63,9 @@ namespace RecipeFinder.DTO
            return await _mealPlan.AddMealPlan(mealplan);
         }
 
-        public async Task<bool> UpdateUser(int id, string username, string password, string firstName, string lastName, string email)
+        public async Task<bool> UpdateUser(User user)
         {
-            return await _user.UpdateUser(id, username, password, firstName, lastName, email);
+            return await _user.UpdateUser(user);
         }
 
         public async Task<bool> UpdateMealPlan(MealPlan mealplan)
@@ -70,6 +78,8 @@ namespace RecipeFinder.DTO
             return await _mealPlan.DeleteMealPlan(userID, mealID, date);
         }
 
+
+        //mealplan stuff
         public async Task<bool> DeleteUser(int id)
         {
             return await _user.DeleteUser(id);

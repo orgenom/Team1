@@ -72,19 +72,19 @@ namespace RecipeFinder.DTO
 
         }
 
-        public async Task<bool> UpdateUser(int id, string username, string password, string firstName, string lastName, string email)
+        public async Task<bool> UpdateUser(User user)
         {
             using SqlConnection conn = new(_connectionString);
             await conn.OpenAsync();
 
             string query = "UPDATE [RecipeFinder].[User] SET Username = @Username, Password = @Password, First_name = @First_name, Last_name = @Last_name, Email = @Email WHERE Id = @Id";
             using SqlCommand cmd = new(query, conn);
-            cmd.Parameters.AddWithValue("@Id", id);
-            cmd.Parameters.AddWithValue("@Username", username);
-            cmd.Parameters.AddWithValue("@Password", password);
-            cmd.Parameters.AddWithValue("@First_name", firstName);
-            cmd.Parameters.AddWithValue("@Last_name", lastName);
-            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Id", user.Id);
+            cmd.Parameters.AddWithValue("@Username", user.Username);
+            cmd.Parameters.AddWithValue("@Password", user.Password);
+            cmd.Parameters.AddWithValue("@First_name", user.FirstName);
+            cmd.Parameters.AddWithValue("@Last_name", user.LastName);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
             await cmd.ExecuteNonQueryAsync();
 
             await conn.CloseAsync();

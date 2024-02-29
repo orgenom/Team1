@@ -1,83 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace RecipeFinder.Logic.Model;
 
+
 public class Meal
 {
-    public int Id { get; set; }
+    public string? idMeal { get; set; }
+    public string? strMeal { get; set; }
+    public string? strCategory { get; set; }
+    public string? strArea { get; set; }
+    public string? strInstructions { get; set; }
+    public string? strMealThumb { get; set; }
+    public string? strTags { get; set; }
+    public string? strYoutube { get; set; }
+    public string? strIngredient1 { get; set; }
+    public string? strIngredient2 { get; set; }
+    public string? strIngredient3 { get; set; }
+    public string? strIngredient4 { get; set; }
+    public string? strIngredient5 { get; set; }
+    public string? strIngredient6 { get; set; }
+    public string? strIngredient7 { get; set; }
+    public string? strIngredient8 { get; set; }
+    public string? strIngredient9 { get; set; }
+    public string? strIngredient10 { get; set; }
+    public string? strIngredient11 { get; set; }
+    public string? strIngredient12 { get; set; } 
+    public string? strIngredient13 { get; set; }
+    public string? strIngredient14 { get; set; }
+    public string? strIngredient15 { get; set; }
+    public string? strMeasure1 { get; set; }
+    public string? strMeasure2 { get; set; }
+    public string? strMeasure3 { get; set; }
+    public string? strMeasure4 { get; set; }
+    public string? strMeasure5 { get; set; }
+    public string? strMeasure6 { get; set; }
+    public string? strMeasure7 { get; set; }
+    public string? strMeasure8 { get; set; }   
+    public string? strMeasure9 { get; set; }
+    public string? strMeasure10 { get; set; }  
+    public string? strMeasure11 { get; set; }
+    public string? strMeasure12 { get; set; }
+    public string? strMeasure13 { get; set; }
+    public string? strMeasure14 { get; set; }
+    public string? strMeasure15 { get; set; }
 
-    public string Name { get; set; } = null!;
+    public override string ToString()
+    {
+        return $"idMeal: {idMeal}, strMeal: {strMeal}, strCategory: {strCategory}, strArea: {strArea}, strInstructions: {strInstructions}, strMealThumb: {strMealThumb}, strTags: {strTags}, strYoutube: {strYoutube}, strIngredient1: {strIngredient1}, strIngredient2: {strIngredient2}, strIngredient3: {strIngredient3}, strIngredient4: {strIngredient4}, strIngredient5: {strIngredient5}, strIngredient6: {strIngredient6}, strIngredient7: {strIngredient7}, strIngredient8: {strIngredient8}, strIngredient9: {strIngredient9}, strIngredient10: {strIngredient10}, strIngredient11: {strIngredient11}, strIngredient12: {strIngredient12}, strIngredient13: {strIngredient13}, strIngredient14: {strIngredient14}, strIngredient15: {strIngredient15}, strMeasure1: {strMeasure1}, strMeasure2: {strMeasure2}, strMeasure3: {strMeasure3}, strMeasure4: {strMeasure4}, strMeasure5: {strMeasure5}, strMeasure6: {strMeasure6}, strMeasure7: {strMeasure7}, strMeasure8: {strMeasure8}, strMeasure9: {strMeasure9}, strMeasure10: {strMeasure10}, strMeasure11: {strMeasure11}, strMeasure12: {strMeasure12}, strMeasure13: {strMeasure13}, strMeasure14: {strMeasure14}, strMeasure15: {strMeasure15}";
+    }
+}
 
-    public string Category { get; set; } = null!;
 
-    public string Area { get; set; } = null!;
-
-    public string Instructions { get; set; } = null!;
-
-    public string? MealThumb { get; set; }
-
-    public string? Tags { get; set; }
-
-    public string? Youtube { get; set; }
-
-    public string Ingredient1 { get; set; } = null!;
-
-    public string? Ingredient2 { get; set; }
-
-    public string? Ingredient3 { get; set; }
-
-    public string? Ingredient4 { get; set; }
-
-    public string? Ingredient5 { get; set; }
-
-    public string? Ingredient6 { get; set; }
-
-    public string? Ingredient7 { get; set; }
-
-    public string? Ingredient8 { get; set; }
-
-    public string? Ingredient9 { get; set; }
-
-    public string? Ingredient10 { get; set; }
-
-    public string? Ingredient11 { get; set; }
-
-    public string? Ingredient12 { get; set; }
-
-    public string? Ingredient13 { get; set; }
-
-    public string? Ingredient14 { get; set; }
-
-    public string? Ingredient15 { get; set; }
-
-    public string Measure1 { get; set; } = null!;
-
-    public string? Measure2 { get; set; }
-
-    public string? Measure3 { get; set; }
-
-    public string? Measure4 { get; set; }
-
-    public string? Measure5 { get; set; }
-
-    public string? Measure6 { get; set; }
-
-    public string? Measure7 { get; set; }
-
-    public string? Measure8 { get; set; }
-
-    public string? Measure9 { get; set; }
-
-    public string? Measure10 { get; set; }
-
-    public string? Measure11 { get; set; }
-
-    public string? Measure12 { get; set; }
-
-    public string? Measure13 { get; set; }
-
-    public string? Measure14 { get; set; }
-
-    public string? Measure15 { get; set; }
+public class MealResponse
+{
+    public List<Meal>? meals { get; set; }
 }
