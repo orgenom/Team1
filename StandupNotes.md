@@ -29,3 +29,11 @@ Abdel
     - allows us to create local copy
 
 - struggle making public database
+
+
+Standup 3:
+Finished all API functionality, working on setting up the HTML CSS frontend.
+
+Consuming all endpoints using JavaScript in our HTML frontend
+
+All user stories implemented
