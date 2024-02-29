@@ -27,8 +27,8 @@ namespace RecipeFinder.API.Controllers
         //filter by category
         //filter by area
 
-        [HttpGet("meal/{first_letter}")]
-        public async Task<ActionResult<Meal>> GetMealByFirstLetter(string first_letter)
+        [HttpGet("meals/first_letter/{first_letter}")]
+        public async Task<ActionResult<List<Meal>>> GetMealsByFirstLetter(string first_letter)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpGet("meal/{name}")]
+        [HttpGet("meal/name/{name}")]
         public async Task<ActionResult<Meal>> GetMealByName(string name)
         {
             try
@@ -53,7 +53,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpGet("meal/{id}")]
+        [HttpGet("meal/id/{id}")]
         public async Task<ActionResult<Meal>> GetMealById(string id)
         {
             try
@@ -118,7 +118,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpGet("filter/{ingredient}")]
+        [HttpGet("filter/ingredient/{ingredient}")]
         public async Task<ActionResult<List<Meal>>> FilterByMainIngredient(string ingredient)
         {
             try
@@ -131,7 +131,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpGet("filter/{category}")]
+        [HttpGet("filter/category/{category}")]
         public async Task<ActionResult<List<Meal>>> FilterByCategory(string category)
         {
             try
@@ -144,7 +144,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpGet("filter/{area}")]
+        [HttpGet("filter/area/{area}")]
         public async Task<ActionResult<List<Meal>>> FilterByArea(string area)
         {
             try
