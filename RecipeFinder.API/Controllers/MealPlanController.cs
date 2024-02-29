@@ -12,9 +12,9 @@ namespace RecipeFinder.API.Controllers
     {
 
         private readonly RecipeRepository _repo;
-        private readonly ILogger _logger;
+        private readonly ILogger<MealPlanController> _logger;
 
-        public MealPlanController(RecipeRepository repo, ILogger logger)
+        public MealPlanController(RecipeRepository repo, ILogger<MealPlanController> logger)
         {
 
             _repo = repo;

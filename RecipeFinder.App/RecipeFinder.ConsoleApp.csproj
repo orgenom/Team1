@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecipeFinder.DTO\RecipeFinder.DTO.csproj" />
+    <ProjectReference Include="..\RecipeFinder.Logic\RecipeFinder.Logic.csproj" />
+  </ItemGroup>
+
 </Project>

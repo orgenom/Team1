@@ -9,16 +9,7 @@ namespace RecipeFinder.Logic
         public static async Task  Main(string[] args)
         {
 
-
-            var mealObject = new MealDBObject();
-
-            List<string?> meal = await mealObject.GetAllCategories();
-
-            foreach (var item in meal)
-            {
-                Console.WriteLine(item);
-            }
-
+           
         }
     }
 }

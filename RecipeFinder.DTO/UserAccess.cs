@@ -136,7 +136,7 @@ namespace RecipeFinder.DTO
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
             using SqlConnection conn = new(_connectionString);
             await conn.OpenAsync();

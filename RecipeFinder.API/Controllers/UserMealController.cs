@@ -12,16 +12,12 @@ namespace Recipe.API.Controllers
     public class UserMealController : ControllerBase
     {
         private readonly RecipeRepository _repo;
-        private readonly ILogger<RecipeRepository> _logger;
-        private readonly EmailObject _emailObject;
-        private readonly MealDBObject _mealDBObject;
+        private readonly ILogger<UserMealController> _logger;
 
-        public UserMealController(RecipeRepository repo, ILogger<RecipeRepository> logger)
+        public UserMealController(RecipeRepository repo, ILogger<UserMealController> logger)
         {
             _repo= repo;
             _logger = logger;
-            _emailObject = new EmailObject(_repo._configuration["BrevoKey"] ?? "");
-            _mealDBObject = new MealDBObject();
         }
 
 

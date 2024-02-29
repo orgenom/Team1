@@ -111,4 +111,15 @@ INSERT INTO [RecipeFinder].[User]
 VALUES
 ('blabla', 'blabla', 'blablabla', 'blablalbla','blallalaa');
 
+
+INSERT INTO [RecipeFinder].[User]
+(Username, Password, First_name, Last_name, Email)
+VALUES
+('user1', 'password1', 'FirstName1', 'LastName1', 'user1@example.com');
+
+INSERT INTO [RecipeFinder].[User]
+(Username, Password, First_name, Last_name, Email)
+VALUES
+('user2', 'password2', 'FirstName2', 'LastName2', 'user2@example.com');
+
 SELECT * FROM [RecipeFinder].[User];

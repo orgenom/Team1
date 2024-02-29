@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RecipeFinder.Logic.Model;
+using sib_api_v3_sdk.Client;
 
 namespace RecipeFinder.DTO
 {
@@ -9,8 +10,17 @@ namespace RecipeFinder.DTO
         readonly private MealAccess  _meal;
         readonly private UserAccess _user;
         readonly private MealPlanAccess _mealPlan;
-        readonly public IConfiguration _configuration;
+        readonly public IConfiguration? _configuration;
 
+
+        public RecipeRepository(string connectionString)
+        {
+
+            _meal = new MealAccess(connectionString);
+            _user = new UserAccess(connectionString);
+            _mealPlan = new MealPlanAccess(connectionString);
+
+        }
         public RecipeRepository(IConfiguration configuration)
         {
 
@@ -41,7 +51,7 @@ namespace RecipeFinder.DTO
             return await _user.Register(user);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
             return await _user.GetAllUsers();
         }

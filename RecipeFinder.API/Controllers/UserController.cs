@@ -11,9 +11,9 @@ namespace RecipeFinder.API.Controllers
     {
 
         private readonly RecipeRepository _repo;
-        private readonly ILogger _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(RecipeRepository repo, ILogger logger)
+        public UserController(RecipeRepository repo, ILogger<UserController> logger)
         {
 
             _repo = repo;
@@ -39,16 +39,19 @@ namespace RecipeFinder.API.Controllers
         }
 
         [HttpGet("users")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<List<User>>> GetAllUsers()
         {
-            var users = await _repo.GetAllUsers();
-            
-            if (users == null)
+            try
             {
-                return NotFound();
-            }
+                List<User> users = await _repo.GetAllUsers();
 
-            return Ok(users);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting all users");
+                return StatusCode(500, "AHHHHHHHHHHHHHH");
+            }
         }
 
         [HttpPost("user")]
