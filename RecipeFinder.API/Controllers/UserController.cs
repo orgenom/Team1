@@ -93,7 +93,7 @@ namespace RecipeFinder.API.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpPost("login/{username}/{password}")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             try
