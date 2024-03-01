@@ -15,13 +15,12 @@ namespace RecipeFinder
             {
                 user = null;
                 loop = true;
-                switch (ShowStartPage())
+                switch (await ShowStartPage())
                 {
                     case 1: // signed in user
                         await ShowMenu(user);
                         break;
-                    case 2: // not signed in user
-                        await ShowMenu(null);
+                    case 2: // return to start page
                         break;
                     case 0: // exit program
                         loop = false;
@@ -33,7 +32,7 @@ namespace RecipeFinder
             }while(loop);
         }
         
-        static int ShowStartPage()
+        static async Task<int> ShowStartPage()
         {
             bool loop;
             do
@@ -50,16 +49,12 @@ namespace RecipeFinder
                 {
                     case "1": // to sign up
                         Console.Clear();
-                        user = new User();
-                        user.FirstName = "Justin";
-                        user.Id = 3;
-                        return 1; // to be implemented
+                        user = await MenuOption.SignUp();
+                        return (user == null) ? 2 : 1;
                     case "2": // to sign in
                         Console.Clear();
-                        user = new User();
-                        user.FirstName = "Joe";
-                        user.Id = 1;
-                        return 1; // to be implemented;
+                        user = await MenuOption.UserSignIn();
+                        return ( user == null) ? 2 : 1;
                     case "3": // continue without sign in
                         Console.Clear();
                         return 2;
@@ -79,12 +74,12 @@ namespace RecipeFinder
 
         static async Task ShowMenu(User? user)
         {
-            Console.Clear();
-            await MenuOption.ShowRandomMeal();
+            //Console.Clear();
+            //await MenuOption.ShowRandomMeal();
 
             Console.WriteLine(user == null ?
                               "------------Welcome-------------" :
-                              "\t--- Welcome " + user.FirstName + " ---");
+                              "--- Welcome " + user.FirstName + " ---");
             Console.WriteLine("============= Menu =============");
             Console.WriteLine("1. Search for a Recipe" +
                             "\n2. Show My Recipes" +
